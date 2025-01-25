@@ -71,8 +71,8 @@ class CategoriesController extends Controller
 
     public function fetchSubCategory($id)
     {
-        if(!$id){
-             return response()->json(['error' , 'empty api data'],404);
+        if (!$id) {
+            return response()->json(['success' => false, 'message' => 'Empty API data provided'], 400);
         }
         $subCategory = SubCategory::where('category_id', $id)->get();
         if($subCategory->isEmpty()){
