@@ -11,8 +11,6 @@ use App\Models\SubCategory;
 class CategoriesController extends Controller
 {
     public function index(Request $request){
-      
-      
         $validator  = Validator::make($request->all(),[
             'name' => 'required|unique:categories',
             'image' => 'required',
@@ -56,8 +54,8 @@ class CategoriesController extends Controller
         if($request->hasFile('image')){
             $image = $request->image;
             $imageName = time() .'.' . $image->getClientOriginalExtension();
-            $image->move(public_path('subCategory/image'), $imageName);
-            $imageUrl = 'subCategory/image' . $imageName;
+            $image->move(public_path('sub-categories/image'), $imageName);
+            $imageUrl = 'sub-categories/image/' . $imageName;
         }
         $subCategory = new SubCategory;
         $subCategory->name = $request->name;
