@@ -10,7 +10,8 @@ use Illuminate\Support\Str;
 use App\Models\SubCategory;
 class CategoriesController extends Controller
 {
-    public function index(Request $request){
+    // **************************************ADD CATEGORIES FUNCTION***********************************//
+    public function addCategory(Request $request){
         $validator  = Validator::make($request->all(),[
             'name' => 'required|unique:categories',
             'image' => 'required',
@@ -38,6 +39,8 @@ class CategoriesController extends Controller
         $allCategories = Categories::all();
         return response()->json(['allCategories' => $allCategories, 'success' =>true],200);
     }
+
+    // **************************************ADD SUB CATEGORIES FUNCTION***********************************//
     public function addSubCategory(Request $request){
         
         $validator = Validator::make($request->all(),[
@@ -64,9 +67,10 @@ class CategoriesController extends Controller
         $subCategory->image       = $imageUrl;
         $subCategory->category_id  = $request->category_id;
         $subCategory->save();
-        return response()->json(['success' => true , 'message' => 'Sub category added successfully'],200);
+        return response()->json(['success' => true , 'message' => 'Sub category added successfully'],201);
     }
 
+    // **************************************FIND SUB CATEGORIES FUNCTION***********************************//
     public function fetchSubCategory($id)
     {
         if (!$id) {
@@ -78,5 +82,14 @@ class CategoriesController extends Controller
         }else{
             return response()->json(['success' => true , 'subcategory' => $subCategory],200);
         }
+    }
+     // **************************************GET SUB CATEGORIES FUNCTION***********************************//
+    public function SubCategories()
+    {
+        $allSubCategories = SubCategory::all();
+        if(!$allSubCategories->isEmpty()){
+            return response()->json(['success' => true , 'allSubCategories' => $allSubCategories],200);
+        }
+        return response()->json(['error' => 'sub categoires are empty'],404);
     }
 }

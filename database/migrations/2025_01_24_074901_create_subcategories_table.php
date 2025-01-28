@@ -11,15 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
+
         Schema::create('sub_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug');           // Subcategory name
-            $table->text('description');      // Subcategory description
-            $table->foreignId('category_id')->constrained()->onDelete('cascade'); // Foreign key to categories table
+            $table->string('slug');
+            $table->text('description');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->string('image')->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
+
     }
 
     /**
