@@ -51,7 +51,7 @@ class ProductController extends Controller
         }
         $topRatedProduct = Product::max('price');
         
-        $products = Product::where('subcategory_id' , $id)->get();
+        $products = Product::where('subcategory_id',$id)->get();
         if($products->isEmpty()){
             return response()->json(['success' => false, 'msg' => 'product not found'],404);
         }
