@@ -3,10 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\SubCategory;
 use App\Models\Categories;
+use App\Models\Country;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -23,5 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SubCategoriesSeeder::class);
         $this->call(CategoriesSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(CountrySeeder::class);
     }
 }

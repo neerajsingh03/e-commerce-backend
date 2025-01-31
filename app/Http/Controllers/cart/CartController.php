@@ -103,7 +103,7 @@ class CartController extends Controller
         ], 200);
     }
     // **************************************CART PRODCUT INCREASE AND DECREASE FUNCTION***********************************//
-    public function increaseCartQuantity(Request $request){
+    public function updateCartQuantity(Request $request){
         
        $validator = $request->validate([
          'cartItemId' => 'required',
