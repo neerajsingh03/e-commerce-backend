@@ -8,6 +8,7 @@ use App\Models\Categories;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use App\Models\SubCategory;
+use App\Models\Product;
 class CategoriesController extends Controller
 {
     // **************************************ADD CATEGORIES FUNCTION***********************************//
@@ -86,7 +87,9 @@ class CategoriesController extends Controller
      // **************************************GET SUB CATEGORIES FUNCTION***********************************//
     public function SubCategories()
     {
-        $allSubCategories = SubCategory::all();
+
+        $allSubCategories = SubCategory::with('products')->get();
+ 
         if(!$allSubCategories->isEmpty()){
             return response()->json(['success' => true , 'allSubCategories' => $allSubCategories],200);
         }
