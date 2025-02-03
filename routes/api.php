@@ -15,6 +15,7 @@ Route::post('/sign-up',[AuthController::class,'signUp']);
 Route::post('/login',[AuthController::class,'login']);
 Route::get('/fetch-sub-category/{id}',[CategoriesController::class,'fetchSubCategory']);
 Route::get('/sub-categories',[CategoriesController::class,'SubCategories']);
+Route::get('/products/{slug?}',[ProductController::class,'products']);
 Route::get('/fetch-categories',[CategoriesController::class,'getCategories']);
 Route::get('/fetch-porduct/{id}',[ProductController::class,'fetchProduct']);
 Route::get('/countries',[CountryController::class,'countries']);

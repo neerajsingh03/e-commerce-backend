@@ -30,10 +30,18 @@ class ProductController extends Controller
             $image->move(public_path('/products/image'),$imageName);
             $imageUrl = 'products/image/'. $imageName;
         }
+        $slug = Str::slug($request->name);
+        $originalSlug = $slug;
+        $counter = 1;
+        while (Product::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+
         $sku = strtoupper(substr($request->name, 0, 3)) . rand(100, 999); 
         $product = new Product;
         $product->name = $request->name;
-        $product->slug = Str::slug($request->name);
+        $product->slug = $slug;
         $product->price = $request->price;
         $product->subcategory_id = $request->selectedSubcategory;
         $product->discount_price = $request->discountPrice;
@@ -56,5 +64,18 @@ class ProductController extends Controller
             return response()->json(['success' => false, 'msg' => 'product not found'],404);
         }
         return response()->json(['success' => true, 'msg' => 'product fetch successfully','products' =>$products,'maxprice' => $topRatedProduct],200);
+    }
+     // **************************************GET PRODUCTS AND PRODUCT FUNCTION***********************************//
+
+     public function products($slug = null){
+        if($slug){
+            $product = Product::where('slug',$slug)->first();
+            return response()->json(['success' => true , 'product' => $product],200);
+        }
+        $products = Product::all();
+        if(!$products->isEmpty()){
+            return response()->json(['success' => true , 'products' => $products],200);
+        }
+        return response()->json(['error' => 'products are empty'],404);
     }
 }

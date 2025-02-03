@@ -8,6 +8,7 @@ use App\Models\Categories;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use App\Models\SubCategory;
+use App\Models\Product;
 class CategoriesController extends Controller
 {
     // **************************************ADD CATEGORIES FUNCTION***********************************//
@@ -44,7 +45,7 @@ class CategoriesController extends Controller
     public function addSubCategory(Request $request){
         
         $validator = Validator::make($request->all(),[
-            'name' => 'required',
+            'name' => 'required|',
             'description' => 'required',
             'category_id'  => 'required',
             'image'        => 'required',
@@ -60,9 +61,16 @@ class CategoriesController extends Controller
             $image->move(public_path('sub-categories/image'), $imageName);
             $imageUrl = 'sub-categories/image/' . $imageName;
         }
+        $slug = Str::slug($request->name);
+        $originalSlug = $slug;
+        $counter = 1;
+        while (SubCategory::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
         $subCategory = new SubCategory;
         $subCategory->name = $request->name;
-        $subCategory->slug  = Str::slug($request->name);
+        $subCategory->slug  = $slug;
         $subCategory->description = $request->description;
         $subCategory->image       = $imageUrl;
         $subCategory->category_id  = $request->category_id;
@@ -92,4 +100,5 @@ class CategoriesController extends Controller
         }
         return response()->json(['error' => 'sub categoires are empty'],404);
     }
+   
 }
