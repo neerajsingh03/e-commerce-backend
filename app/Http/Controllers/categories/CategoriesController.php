@@ -87,7 +87,7 @@ class CategoriesController extends Controller
      // **************************************GET SUB CATEGORIES FUNCTION***********************************//
     public function SubCategories()
     {
-
+ 
         $allSubCategories = SubCategory::with('products')->get();
  
         if(!$allSubCategories->isEmpty()){
